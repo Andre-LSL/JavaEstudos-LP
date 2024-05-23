@@ -19,7 +19,6 @@ public class principal {
                     + "3 - Gravar Registro\n"
                     + "4 - Mostrar indicadores\n"
                     + "9 - Sair "));
-
             switch(codigo) {
                 case 1:
                 vt = m.carregarVotacao(vt);
@@ -72,7 +71,6 @@ public class principal {
                     default:
                             JOptionPane.showMessageDialog(null, "Valor digitado inválido");
                         }
-                        break;
                 }
             }
         }

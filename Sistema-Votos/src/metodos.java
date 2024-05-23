@@ -52,6 +52,19 @@ public class metodos {
         return votosGravacao;
     }
 
+    //Otimização
+
+
+
+
+
+
+
+
+
+
+
+
     // Cálculo de quantidade de votos por seção
     public void eleitores(votacao[] votosIndice) {
         int contadorEleitor, contadorRegistro;
@@ -70,28 +83,30 @@ public class metodos {
         }
       }
 
-    public void MaiorMenor(votacao[] votosMn) {
+      public void MaiorMenor(votacao[] votosMn) {
         int MaiorSecao, MenorSecao, MaiorVoto, MenorVoto, contadorMn;
         MaiorSecao = Integer.MIN_VALUE;
         MaiorVoto = Integer.MIN_VALUE;
         MenorSecao = Integer.MAX_VALUE;
         MenorVoto = Integer.MAX_VALUE;
-
-        for(contadorMn = 0; contadorMn < 10; contadorMn++) {
-            if(resultadoEleitores[contadorMn] > MaiorVoto) { // condição para decidir se é maior ou não.
+    
+        for(contadorMn = 0; contadorMn < resultadoEleitores.length; contadorMn++) {
+            if(resultadoEleitores[contadorMn] > MaiorVoto) {
                 MaiorSecao = contadorMn;
-                MaiorVoto = resultadoEleitores[contadorMn]; // vetor carregado com a quantidade de votos por seção
-            } else if (resultadoEleitores[contadorMn] < MenorVoto) { // condição para decidir se é menor ou não.
+                MaiorVoto = resultadoEleitores[contadorMn];
+            } 
+            if (resultadoEleitores[contadorMn] < MenorVoto) { // Corrigido para verificar se é menor votos
                 MenorSecao = contadorMn;
                 MenorVoto = resultadoEleitores[contadorMn];
             }
-
         }
-            JOptionPane.showMessageDialog(null, "Maior votos foram na seção" + MaiorSecao + "\n" // Mensagem para exibir os valores
-                                         + "Quantidade de votos: " + MaiorVoto + "\n" 
-                                         + "Menor quantidade de votos na seção:" + MenorSecao + "\n" 
-                                         + "Quantidade de votos: " + MenorVoto);
+
+        JOptionPane.showMessageDialog(null, "Maior votos foram na seção " + MaiorSecao + "\n" 
+                                     + "Quantidade de votos: " + MaiorVoto + "\n" 
+                                     + "Menor quantidade de votos na seção: " + MenorSecao + "\n" 
+                                     + "Quantidade de votos: " + MenorVoto);
     }
+    
 
     public void candidatosVoto(votacao[] calcVotos) {
         int ctdr, auxiliar = 0;
@@ -125,22 +140,21 @@ public class metodos {
             QuantVotos[1][auxiliar1] = auxiliar1;
         }
     
-        // Ordenando os candidatos com base no número de votos
+    // Ordenando os candidatos com base no número de votos
         for (int anterior = 0; anterior < QuantVotos[0].length - 1; anterior++) {
             for (int proximo = anterior + 1; proximo < QuantVotos[0].length; proximo++) {
                 if (QuantVotos[0][anterior] < QuantVotos[0][proximo]) {
-                    // Troca de posições se o candidato proximo tiver mais votos que o candidato anterior
-                    int auxVotos = QuantVotos[0][anterior];
-                    QuantVotos[0][anterior] = QuantVotos[0][proximo];
-                    QuantVotos[0][proximo] = auxVotos;
-    
-                    int auxCandidato = QuantVotos[1][anterior];
-                    QuantVotos[1][anterior] = QuantVotos[1][proximo];
-                    QuantVotos[1][proximo] = auxCandidato;
-                }
-            }
+            // Troca de posições se o candidato proximo tiver mais votos que o candidato anterior
+            int auxVotos = QuantVotos[0][anterior];
+            QuantVotos[0][anterior] = QuantVotos[0][proximo];
+            QuantVotos[0][proximo] = auxVotos;
+
+            int auxCandidato = QuantVotos[1][anterior];
+            QuantVotos[1][anterior] = QuantVotos[1][proximo];
+            QuantVotos[1][proximo] = auxCandidato;
         }
-    
+    }
+}
         // Exibição do ranking dos top 10 mais votados
         for (int auxiliar2 = 0; auxiliar2 < 10; auxiliar2++) {
             JOptionPane.showMessageDialog(null, 
