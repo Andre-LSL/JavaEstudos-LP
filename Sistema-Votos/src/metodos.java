@@ -51,20 +51,6 @@ public class metodos {
         JOptionPane.showMessageDialog(null, "Arquivo gerado.");
         return votosGravacao;
     }
-
-    //Otimização
-
-
-
-
-
-
-
-
-
-
-
-
     // Cálculo de quantidade de votos por seção
     public void eleitores(votacao[] votosIndice) {
         int contadorEleitor, contadorRegistro;
@@ -76,7 +62,6 @@ public class metodos {
             }
         }
     }
-
         for(contadorEleitor = 0; contadorEleitor < resultadoEleitores.length; contadorEleitor++) {
             JOptionPane.showMessageDialog(null, "Quantidade de votos da Seção:" + contadorEleitor + "\n"
             + "Numeros Eleitores: " + resultadoEleitores[contadorEleitor]);
@@ -95,7 +80,7 @@ public class metodos {
                 MaiorSecao = contadorMn;
                 MaiorVoto = resultadoEleitores[contadorMn];
             } 
-            if (resultadoEleitores[contadorMn] < MenorVoto) { // Corrigido para verificar se é menor votos
+            if (resultadoEleitores[contadorMn] < MenorVoto) { 
                 MenorSecao = contadorMn;
                 MenorVoto = resultadoEleitores[contadorMn];
             }
@@ -128,6 +113,7 @@ public class metodos {
     }
 
     public void maisVotos(votacao[] resultado) {
+        
         // Zerando a contagem de votos antes de contar novamente
         for (int i = 0; i < QuantVotos[0].length; i++) {
             QuantVotos[0][i] = 0;
