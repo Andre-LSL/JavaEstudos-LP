@@ -4,21 +4,22 @@
 
 import javax.swing.JOptionPane;
 public class principal {
-    public static void main (String args []) {
+    public static void main (String [] args) {
         int codigo = 0;
         Estatistiscas vt[] = new Estatistiscas[10];
         Metodos m = new Metodos();
-        String mensagem = "1 - Registrar valores\n"
-                            + "2 - Consulta de Acidentes\n"
-                            + "3 - Menor e maior quantidade de acidentes\n"
-                            + "4 - Cidade com quantidade de acidentes acima da média\n"
-                            + "9 - Sair";
+        
         for (int i = 0; i < 10; i++) {
             vt[i] = new Estatistiscas();
         }
         
         while(codigo != 9) {
-            codigo = Integer.parseInt(JOptionPane.showInputDialog(null, mensagem));
+            codigo = Integer.parseInt(JOptionPane.showInputDialog(null, 
+                                                "1 - Registrar valores\n"
+                                                + "2 - Consulta de Acidentes\n"
+                                                + "3 - Menor e maior quantidade de acidentes\n"
+                                                + "4 - Cidade com quantidade de acidentes acima da média\n"
+                                                + "9 - Sair"));
             switch (codigo) {
                 case 1:
                     vt = m.registro(vt);
@@ -37,7 +38,6 @@ public class principal {
             }
 
         }
-
     }
 }
 
