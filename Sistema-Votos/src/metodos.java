@@ -3,10 +3,7 @@ import javax.swing.JOptionPane;
 import java.io.*;
 public class metodos {
 
-    // variavel global para calculo de quantidade de voto por seção
-    int resultadoEleitores[] = new int [11]; 
-    int QuantVotos[][] = new int[2][301]; // matriz que armazena na linha 0 os votos e, na linha 1 os candidatos.
-    // Carregando os votos utilizando a função Random.
+        // Carregando os votos utilizando a função Random.
     public votacao[] carregarVotacao (votacao[] votosReceber) {
         Random aleatorio = new Random();
         for (int contador = 0; contador < votosReceber.length; contador ++) {
@@ -16,17 +13,16 @@ public class metodos {
         return votosReceber;
     }
 
-    // Ordenando os Numeros de Seção e por consequência, os votos.
+        // Ordenando os Numeros de Seção e por consequência, os votos.
     public votacao[] ordenarVotacao (votacao[] votosOrdenar) {
         int nxt, ant;
         for (ant = 0; ant < votosOrdenar.length; ant ++){
             for (nxt = ant + 1; nxt < votosOrdenar.length; nxt++)
                 if (votosOrdenar[ant].numeroSecao > votosOrdenar[nxt].numeroSecao) {
-                    
+            
                     votosOrdenar[200].numeroSecao = votosOrdenar[ant].numeroSecao; // auxiliar
                     votosOrdenar[ant].numeroSecao = votosOrdenar[nxt].numeroSecao;
                     votosOrdenar[nxt].numeroSecao = votosOrdenar[200].numeroSecao;
-
                     //Ordenando os votos junto com a seção.
                     votosOrdenar[200].votoCandidato = votosOrdenar[ant].votoCandidato;
                     votosOrdenar[ant].votoCandidato = votosOrdenar[nxt].votoCandidato;
@@ -36,7 +32,7 @@ public class metodos {
         return votosOrdenar;
     }
 
-    // Método para gravação do Arquivo em txt.
+        // Método para gravação do Arquivo em txt.
     public votacao[] gravacao(votacao[] votosGravacao) throws IOException {
         String nomeArquivo = "VotosRegistro";
         BufferedWriter gravar = new BufferedWriter(new FileWriter(nomeArquivo));
@@ -51,105 +47,94 @@ public class metodos {
         JOptionPane.showMessageDialog(null, "Arquivo gerado.");
         return votosGravacao;
     }
-    // Cálculo de quantidade de votos por seção
-    public void eleitores(votacao[] votosIndice) {
-        int contadorEleitor, contadorRegistro;
-        // Um vetor com 10 casas(porque há 10 seções) e em cada casa guardando a quantidade de votos respectivamente. Vetor[1] = votos seção 1.
-   for (contadorRegistro = 0; contadorRegistro < resultadoEleitores.length; contadorRegistro++) { // Loop que decidi qual seção os votos seráo recolhidos
-        for (contadorEleitor = 0; contadorEleitor < votosIndice.length; contadorEleitor++) {
-            if (contadorRegistro == votosIndice[contadorEleitor].numeroSecao) {
-                resultadoEleitores[contadorRegistro] ++;
+
+        // Calculo feito automaticamente 
+        // Quantidade de votos por seção
+    public int[] calcEleitores (votacao[] VotosCalc, int[] vtEleitores) {
+        int contadorVotos, auxiliarCalc;
+            for (contadorVotos = 0; contadorVotos < VotosCalc.length; contadorVotos++) {
+                auxiliarCalc = VotosCalc[contadorVotos].numeroSecao;
+                vtEleitores[auxiliarCalc]++;
+            }
+            return vtEleitores;
+    }
+
+        // Votos por candidatos
+    public int[][] qtndVotos (votacao[] VotosCalc2, int[][] CanditatosVtCalc) {
+        int ContadorCandidatos,AuxCandidatos;
+        for (ContadorCandidatos = 0; ContadorCandidatos < VotosCalc2.length; ContadorCandidatos++) {
+            CanditatosVtCalc[1][ContadorCandidatos] = ContadorCandidatos; // Loop que preenche a linha 1 da matriz com os numeros dos candidatos.
+        }
+        for (ContadorCandidatos = 0; ContadorCandidatos < VotosCalc2.length; ContadorCandidatos++) {
+            AuxCandidatos = VotosCalc2[ContadorCandidatos].numeroSecao; // Loop usa o valor do voto como indice da matriz para adicionar 1. 
+            CanditatosVtCalc[0][AuxCandidatos]++;
+        }
+        return CanditatosVtCalc;
+    }
+
+        // Exibir valores
+    public void eleitores (votacao[] VotosExibir, int[] QntdVotosSecao) {
+        int contadorSecao;
+        for(contadorSecao = 0; contadorSecao < QntdVotosSecao.length; contadorSecao++) {
+            JOptionPane.showMessageDialog(null, "Seção: " + contadorSecao + "\n"
+                                                                + "Votos: " + QntdVotosSecao[contadorSecao]);
+        }
+    }
+        // Calcula e exibe a seção com maior e menor quantidade de votos.
+    public void MaiorMenor (votacao[] VotosExibir2, int[] QntdVotosMaiorMenor) {
+        int contadorMaior, maxSecao, minSecao, maxVotos, minVotos;
+        maxSecao = Integer.MIN_VALUE; maxVotos = Integer.MIN_VALUE;
+        minSecao = Integer.MAX_VALUE; minVotos = Integer.MAX_VALUE; 
+            for(contadorMaior = 0; contadorMaior < QntdVotosMaiorMenor.length; contadorMaior++) {
+                if (QntdVotosMaiorMenor[contadorMaior] > maxVotos) {
+                    maxSecao = contadorMaior;
+                    maxVotos = QntdVotosMaiorMenor[contadorMaior];
+                } else if(QntdVotosMaiorMenor[contadorMaior] < minVotos) {
+                    minSecao = contadorMaior;
+                    minVotos = QntdVotosMaiorMenor[contadorMaior];
+                }
+        }
+        JOptionPane.showMessageDialog(null, 
+                                        "Seção com maior quantidade de votos: " + maxSecao + "\n"
+                                        + "Votos: " + maxVotos + "\n"
+                                        + "Seção com menor quantidade de votos: " + minSecao + "\n"
+                                        + "Votos: " + minVotos);
+    }
+
+    // Procedimento que apenas mostra os valores. Desconsidera os candidatos com 0 votos.
+    public void candidatosVoto (votacao[] VotosExibir3, int[][] QntdVotosExibir) {
+        int contadorVotos;
+        for(contadorVotos = 0; contadorVotos < QntdVotosExibir[0].length; contadorVotos++) {
+            if (QntdVotosExibir[0][contadorVotos] != 0) {
+                JOptionPane.showMessageDialog(null, 
+                                            "Candidato:" + contadorVotos + "\n"
+                                             + "Quantidade de votos:" + QntdVotosExibir[0][contadorVotos]);
             }
         }
     }
-        for(contadorEleitor = 0; contadorEleitor < resultadoEleitores.length; contadorEleitor++) {
-            JOptionPane.showMessageDialog(null, "Quantidade de votos da Seção:" + contadorEleitor + "\n"
-            + "Numeros Eleitores: " + resultadoEleitores[contadorEleitor]);
-        }
-      }
-
-      public void MaiorMenor(votacao[] votosMn) {
-        int MaiorSecao, MenorSecao, MaiorVoto, MenorVoto, contadorMn;
-        MaiorSecao = Integer.MIN_VALUE;
-        MaiorVoto = Integer.MIN_VALUE;
-        MenorSecao = Integer.MAX_VALUE;
-        MenorVoto = Integer.MAX_VALUE;
+    public void maisVotos(votacao[] VotosExibir4, int[][] QntdVotosMaiores) {
+        int nxt, ant, aux;
+        for (ant = 0; ant < QntdVotosMaiores[0].length; ant++) {
+            for (nxt = ant + 1; nxt < QntdVotosMaiores[0].length; nxt++) {
+                if (QntdVotosMaiores[0][ant] < QntdVotosMaiores[0][nxt]) {
+                    // Ordenando do maior para o menor
+                    aux = QntdVotosMaiores[0][ant];
+                    QntdVotosMaiores[0][ant] = QntdVotosMaiores[0][nxt];
+                    QntdVotosMaiores[0][nxt] = aux;
     
-        for(contadorMn = 0; contadorMn < resultadoEleitores.length; contadorMn++) {
-            if(resultadoEleitores[contadorMn] > MaiorVoto) {
-                MaiorSecao = contadorMn;
-                MaiorVoto = resultadoEleitores[contadorMn];
-            } 
-            if (resultadoEleitores[contadorMn] < MenorVoto) { 
-                MenorSecao = contadorMn;
-                MenorVoto = resultadoEleitores[contadorMn];
+                    // Mudando junto o número do candidato
+                    aux = QntdVotosMaiores[1][ant];
+                    QntdVotosMaiores[1][ant] = QntdVotosMaiores[1][nxt];
+                    QntdVotosMaiores[1][nxt] = aux;
+                }
             }
         }
-
-        JOptionPane.showMessageDialog(null, "Maior votos foram na seção " + MaiorSecao + "\n" 
-                                     + "Quantidade de votos: " + MaiorVoto + "\n" 
-                                     + "Menor quantidade de votos na seção: " + MenorSecao + "\n" 
-                                     + "Quantidade de votos: " + MenorVoto);
-    }
-    
-
-    public void candidatosVoto(votacao[] calcVotos) {
-        int ctdr, auxiliar = 0;
-
-        // Zerando a contagem de votos antes de contar novamente
-        for (int i = 0; i < QuantVotos[0].length; i++) {
-            QuantVotos[0][i] = 0;
-        }
-        for(ctdr = 0; ctdr < calcVotos.length; ctdr++) {
-            auxiliar = calcVotos[ctdr].votoCandidato;
-            QuantVotos[0][auxiliar]++;
-            QuantVotos[1][auxiliar] = auxiliar;
-        }
-        for(ctdr = 0; ctdr < calcVotos.length; ctdr ++) {
+        for (int contador = 0; contador < 10; contador++) {
             JOptionPane.showMessageDialog(null, 
-                                        "Candidato:" +  QuantVotos[1][ctdr] + "\n"
-                                        + "Quantidade votos: " + QuantVotos[0][ctdr]);
-        }
-    }
-
-    public void maisVotos(votacao[] resultado) {
-        
-        // Zerando a contagem de votos antes de contar novamente
-        for (int i = 0; i < QuantVotos[0].length; i++) {
-            QuantVotos[0][i] = 0;
-        }
-    
-        // Contando os votos de cada candidato
-        for (int ctdr2 = 0; ctdr2 < resultado.length; ctdr2++) {
-            int auxiliar1 = resultado[ctdr2].votoCandidato;
-            QuantVotos[0][auxiliar1]++;
-            QuantVotos[1][auxiliar1] = auxiliar1;
-        }
-    
-    // Ordenando os candidatos com base no número de votos
-        for (int anterior = 0; anterior < QuantVotos[0].length - 1; anterior++) {
-            for (int proximo = anterior + 1; proximo < QuantVotos[0].length; proximo++) {
-                if (QuantVotos[0][anterior] < QuantVotos[0][proximo]) {
-            // Troca de posições se o candidato proximo tiver mais votos que o candidato anterior
-            int auxVotos = QuantVotos[0][anterior];
-            QuantVotos[0][anterior] = QuantVotos[0][proximo];
-            QuantVotos[0][proximo] = auxVotos;
-
-            int auxCandidato = QuantVotos[1][anterior];
-            QuantVotos[1][anterior] = QuantVotos[1][proximo];
-            QuantVotos[1][proximo] = auxCandidato;
+                "Ranking: " + (contador + 1) + "\n" +
+                "Candidato: " + QntdVotosMaiores[1][contador] + "\n" +
+                "Votos: " + QntdVotosMaiores[0][contador]);
         }
     }
 }
-        // Exibição do ranking dos top 10 mais votados
-        for (int auxiliar2 = 0; auxiliar2 < 10; auxiliar2++) {
-            JOptionPane.showMessageDialog(null, 
-                    "Posição no ranking: " + (auxiliar2 + 1) + "\n"
-                    + "Candidato: " + QuantVotos[1][auxiliar2] + "\n"
-                    + "Votos: " + QuantVotos[0][auxiliar2]);
-        }
-    }
-  }
 
-
-  
