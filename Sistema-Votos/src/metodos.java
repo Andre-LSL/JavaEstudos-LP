@@ -52,7 +52,7 @@ public class metodos {
         // Quantidade de votos por seção
     public int[] calcEleitores (votacao[] VotosCalc) {
         int contadorVotos, auxiliarCalc;
-        int vtEleitores[] = new int[10];
+        int vtEleitores[] = new int[11];
             for (contadorVotos = 0; contadorVotos < VotosCalc.length; contadorVotos++) {
                 auxiliarCalc = VotosCalc[contadorVotos].numeroSecao;
                 vtEleitores[auxiliarCalc]++;
