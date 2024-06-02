@@ -39,8 +39,8 @@ import java.io.*;
                     break;
                 case 4:
                     if (Otimizacao == true) { 
-                        resultadoEleitores = m.calcEleitores(vt, resultadoEleitores); // Função que calcula votos por seção
-                        QuantVotos = m.qtndVotos(vt, QuantVotos); // Função que calcula quantidade de votos por candidato
+                        resultadoEleitores = m.calcEleitores(vt); // Função que calcula votos por seção
+                        QuantVotos = m.qtndVotos(vt); // Função que calcula quantidade de votos por candidato
                         }
                         menuConsulta(vt, resultadoEleitores, QuantVotos);
                         Otimizacao = false;

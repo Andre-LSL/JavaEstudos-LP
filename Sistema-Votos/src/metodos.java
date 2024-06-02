@@ -50,8 +50,9 @@ public class metodos {
 
         // Calculo feito automaticamente 
         // Quantidade de votos por seção
-    public int[] calcEleitores (votacao[] VotosCalc, int[] vtEleitores) {
+    public int[] calcEleitores (votacao[] VotosCalc) {
         int contadorVotos, auxiliarCalc;
+        int vtEleitores[] = new int[10];
             for (contadorVotos = 0; contadorVotos < VotosCalc.length; contadorVotos++) {
                 auxiliarCalc = VotosCalc[contadorVotos].numeroSecao;
                 vtEleitores[auxiliarCalc]++;
@@ -60,8 +61,9 @@ public class metodos {
     }
 
         // Votos por candidatos
-    public int[][] qtndVotos (votacao[] VotosCalc2, int[][] CanditatosVtCalc) {
+    public int[][] qtndVotos (votacao[] VotosCalc2) {
         int ContadorCandidatos,AuxCandidatos;
+        int CanditatosVtCalc[][] = new int[2][201];
         for (ContadorCandidatos = 0; ContadorCandidatos < VotosCalc2.length; ContadorCandidatos++) {
             CanditatosVtCalc[1][ContadorCandidatos] = ContadorCandidatos; // Loop que preenche a linha 1 da matriz com os numeros dos candidatos.
         }
@@ -107,7 +109,7 @@ public class metodos {
         for(contadorVotos = 0; contadorVotos < QntdVotosExibir[0].length; contadorVotos++) {
             if (QntdVotosExibir[0][contadorVotos] != 0) {
                 JOptionPane.showMessageDialog(null, 
-                                            "Candidato:" + contadorVotos + "\n"
+                                            "Candidato:" + QntdVotosExibir[1][contadorVotos] + "\n"
                                              + "Quantidade de votos:" + QntdVotosExibir[0][contadorVotos]);
             }
         }
